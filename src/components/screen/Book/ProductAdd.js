@@ -7,6 +7,16 @@ import { postProducts } from '../../redux/actions/Product';
 import Spinner from '../Spinner/Spinner';
 
 class BookAdd extends Component {
+    static navigationOptions = {
+        title: "Add Product",
+        headerStyle: {
+            backgroundColor: '#3346A8',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+    };
 
     state = {
         name: "",
@@ -16,6 +26,12 @@ class BookAdd extends Component {
         id_category: "",
         selected: undefined
     };
+
+    onCategory(e) {
+        this.setState({
+            id_category: e
+        })
+    }
 
     onValueChange(event) {
         this.setState({
@@ -27,9 +43,9 @@ class BookAdd extends Component {
         console.log(this.state)
         await this.props.dispatch(postProducts(this.state));
 
-        // if (!this.props.books.books.isLoading) {
-        //     this.props.navigation.navigate('Book');
-        // }
+        if (!this.props.books.books.isLoading) {
+            this.props.navigation.navigate('Book');
+        }
 
     }
 
@@ -40,7 +56,7 @@ class BookAdd extends Component {
                 <Content>
                     <Form style={{ marginRight: 10 }}>
                         <Item>
-                            <Input placeholder="name books" onChangeText={(text) => this.setState({ name: text })} />
+                            <Input placeholder="Name Product" onChangeText={(text) => this.setState({ name: text })} />
                         </Item>
                         <Item>
                             <Input placeholder="description" onChangeText={(text) => this.setState({ description: text })} />
@@ -55,20 +71,7 @@ class BookAdd extends Component {
                             <Input placeholder="stock" onChangeText={(text) => this.setState({ stock: text })} />
                         </Item>
                         <Item>
-                            <Picker
-                                mode="dropdown"
-                                iosIcon={<Icon name="arrow-down" />}
-                                placeholder="Choose"
-                                placeholderStyle={{ color: "#bfc6ea" }}
-                                placeholderIconColor="#007aff"
-                                style={{ width: undefined }}
-                                selectedValue={this.state.selected}
-                                onValueChange={this.onValueChange.bind(this)}
-                            >
-                                <Picker.Item label="Microcontroller" value='1' />
-                                <Picker.Item label="Component" value='2' />
-
-                            </Picker>
+                            <Input placeholder="Category" onChangeText={(text) => this.setState({ id_category: text })} />
                         </Item>
                     </Form>
                     <Button primary style={{ margin: 10 }} onPress={this.onSubmit}>

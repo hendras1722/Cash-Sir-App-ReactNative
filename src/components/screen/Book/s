@@ -1,0 +1,22 @@
+                    <Picker
+                        selectedValue={this.state.id_category}
+                        style={{ height: 50, width: 100 }}
+                        onValueChange={(this.sortProduct)
+                        }>
+                        <Picker.Item label="Choose" value="" />
+                        <Picker.Item label="Microcontroller" value="1" />
+                        <Picker.Item label="Component" value="2" />
+                    </Picker>
+
+                    
+    sortProduct = async (e) => {
+        console.log(e)
+        this.setState = {
+            id_category: e
+        }
+        await this.props.dispatch(sortProduct(e))
+    }
+
+    state = {
+        id_category: ''
+    }

@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, Text, FlatList, TouchableOpacity, Picker } from 'react-native';
 import { InputGroup, Input } from 'native-base';
 
 // import Spinner from '../Spinner/Spinner';
-import { getProducts, deleteProducts, searchProduct } from '../../redux/actions/Product';
+import { getProducts, deleteProducts, searchProduct, sortProduct } from '../../redux/actions/Product';
 
 class Book extends Component {
 
-    static navigationOptions = {
-        title: null,
-        headerStyle: {
-            backgroundColor: '#3346A8',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 25,
-        },
-    };
+    state = {
+        id_category: ''
+    }
 
     onSearchProduct = (e) => {
         console.log(e)
@@ -57,10 +49,18 @@ class Book extends Component {
         await this.props.dispatch(deleteProducts(productId));
     };
 
-
-    // onRefreshing = () => {
-    //     this.getBook();
-    // }
+    sortProduct = async (e) => {
+        console.log(e)
+        this.setState = ({
+            id_category: e
+        })
+        await this.props.dispatch(sortProduct(e))
+    }
+    onValueChange(event) {
+        this.setState({
+            id_category: event
+        });
+    }
 
     renderRow = ({ item }) => {
         return (
@@ -70,14 +70,20 @@ class Book extends Component {
                 <View style={{ flex: 1, flexDirection: 'column' }}>
                     <Text style={{ fontSize: 18, marginLeft: 10, marginBottom: 5 }}>{item.name}</Text>
                     <Text style={{ fontSize: 15, marginLeft: 10, marginBottom: 18 }}>Stock {item.stock}</Text>
+                    <Text style={{ fontSize: 15, marginLeft: 10, marginBottom: 18, position: 'absolute', marginLeft: 100, marginTop: 30 }}>Rp.{item.price}</Text>
+
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => this.props.navigation.navigate('EditBook', {
+                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => this.props.navigation.navigate('EditProduct', {
                             product: item
                         })}>
-                            <Text style={{ fontSize: 17, color: "orange" }}>Edit</Text>
+                            <Text>   <Image source={require('../../../img/res/drawable-hdpi/baseline_edit_black_18.png')} style={{ position: 'relative', width: 25, height: 25 }} />
+                            </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ marginLeft: 10 }}>
-                            <Text style={{ fontSize: 17, color: "red" }} onPress={this.onSubmit.bind(this, item.id)}>Delete</Text>
+                            <Text style={{ fontSize: 17, color: "red" }} onPress={this.onSubmit.bind(this, item.id)}>
+                                <Text>   <Image source={require('../../../img/res/drawable-hdpi/baseline_delete_black_18.png')} style={{ position: 'relative', width: 25, height: 25 }} />
+                                </Text>
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -95,10 +101,18 @@ class Book extends Component {
                         <Input style={{ backgroundColor: 'white', width: 50, marginHorizontal: 50, borderRadius: 20, paddingLeft: 50, paddingRight: 40 }} placeholder='Mau cari apa ..... ?' onChangeText={this.onSearchProduct} />
                     </InputGroup>
                     <Image source={require('../../../img/res/drawable-hdpi/baseline_search_black_18.png')} style={{ position: 'absolute', marginLeft: 65, marginTop: 12 }} />
-
                 </View>
+                <Picker
+                    selectedValue={this.state.id_category}
+                    style={{ height: 50, width: 100 }}
+                    onValueChange={this.sortProduct}>
+                    <Picker.Item label="Choose" value="" />
+                    <Picker.Item label="Microcontroller" value="1" />
+                    <Picker.Item label="Component" value="2" />
+                </Picker>
+
                 {/* <Spinner isLoading={books.isLoading} /> */}
-                <View style={{ marginTop: 10, marginLeft: 10, marginBottom: 10 }}>
+                <View style={{ marginTop: 10, marginLeft: 10, marginBottom: 10, maxHeight: 550 }}>
                     <FlatList
                         data={products}
                         renderItem={this.renderRow}

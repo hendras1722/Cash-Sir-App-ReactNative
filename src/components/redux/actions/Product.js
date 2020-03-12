@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export const getProducts = () => {
     return {
         type: 'GET_PRODUCTS',
@@ -30,21 +31,15 @@ export const searchProduct = (name) => {
         })
     }
 }
-// export const sortProduct = (data) => {
-//     const authorization = localStorage.getItem('token');
-//     const userId = localStorage.getItem("user-id");
-//     return {
-//         type: 'GET_SORTPRODUCTS',
-//         payload: axios({
-//             method: "GET",
-//             url: `http://192.168.1.9:4000/pos?idCat=${data}&orderBy=ASC`,
-//             headers: {
-//                 "authorization": authorization,
-//                 "user-id": userId
-//             }
-//         })
-//     }
-// }
+export const sortProduct = (data) => {
+    return {
+        type: 'GET_SORTPRODUCTS',
+        payload: axios({
+            method: "GET",
+            url: `http://192.168.1.16:4000/pos?idCat=${data}&orderBy=ASC`
+        })
+    }
+}
 
 // export const orderBy = (data) => {
 //     return {

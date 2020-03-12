@@ -15,7 +15,7 @@ import ProductAddScreen from './src/components/screen/Book/ProductAdd';
 import BookEditScreen from './src/components/screen/Book/BookEdit';
 import AboutDetailScreen from './src/components/screen/About/AboutDetailScreen';
 import LoginScreen from './src/components/screen/Login/LoginScreen'
-
+import AccountScreen from './src/components/screen/Account/Account'
 // const tabNavigator = createBottomTabNavigator(
 //   {
 //     Home: HomeScreen,
@@ -26,12 +26,18 @@ import LoginScreen from './src/components/screen/Login/LoginScreen'
 const homeNavigator = createStackNavigator(
   {
     Home: HomeScreen,
-    Product: ProductScreen,
+    Product: {
+      screen: ProductScreen,
+      headerStyle: {
+        backgroundColor: '#3346A8',
+      },
+    },
     AddProduct: ProductAddScreen,
     DetailBook: BookDetailScreen,
-    EditBook: BookEditScreen,
+    EditProduct: BookEditScreen,
     AboutDetail: AboutDetailScreen,
-    Login: LoginScreen
+    Login: LoginScreen,
+    Account: AccountScreen
   },
   {
     initialRouteName: 'Login',

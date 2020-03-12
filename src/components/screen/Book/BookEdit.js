@@ -53,7 +53,7 @@ class ProductEdit extends Component {
                 <Content>
                     <Form style={{ marginRight: 10 }}>
                         <Item>
-                            <Input placeholder="name books" onChangeText={(text) => this.setState({ name: text })} />
+                            <Input placeholder="Name Product" onChangeText={(text) => this.setState({ name: text })} />
                         </Item>
                         <Item>
                             <Input placeholder="description" onChangeText={(text) => this.setState({ description: text })} />
